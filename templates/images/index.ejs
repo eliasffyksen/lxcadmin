@@ -1,0 +1,37 @@
+<%- await include('../head.ejs') %>
+
+<h2>Images:</h2>
+
+<% if(req.error) { %>
+	<div class="alert alert-danger mb-3"><%= req.error %></div>
+<% } %>
+
+<form method="post">
+	<div class="input-group mb-3">
+		<input class="form-control" placeholder="Name" name="name">
+		<div class="input-group-append">
+			<button class="btn btn-success" type="submit" name="import">Import</button>
+		</div>
+	</div>
+</form>
+
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% for (const image of await lxc.image.list()) { %>
+			<tr>
+				<td><%= image.properties.description %></td>
+				<td>
+					<a href="/images/delete/<%= image.fingerprint %>" class="btn btn-danger text-light btn-sm">Delete</a>
+				</td>
+			</tr>
+		<% } %>
+	</tbody>
+</table>
+
+<%- await include('../footer.ejs') %>

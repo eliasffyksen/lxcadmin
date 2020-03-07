@@ -1,0 +1,13 @@
+
+<% function navItem(name, path) { %>
+<a href="<%- path %>" class="list-group-item list-group-item-action <%=
+req.url.startsWith(path) ? 'active' : ''
+%>">
+<%= name %>
+</a>
+<% } %>
+
+<div class="list-group">
+  <% navItem('Containers', '/containers'); %>
+  <% navItem('Images', '/images'); %>
+</div>

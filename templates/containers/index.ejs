@@ -1,0 +1,51 @@
+
+<% var page = 'Containers'; %>
+
+<%- await include('../head.ejs') %>
+<h2>Containers:
+<a href="/containers/new" class="btn btn-success text-light">New container</a>
+</h2>
+
+<table class="table table-striped">
+	<thead>
+		<th scope="col">Name</th>
+		<th scope="col">IP</th>
+		<th scope="col">Actions</th>
+	</thead>
+	<% for (const container of await lxc.list()) { 
+	var pstr = container.config['volatile.last_state.power'];
+	var running = pstr == 'RUNNING';
+	var badge_type = pstr == 'RUNNING' ? 'badge-success' :
+		'STOPPED' ? 'badge-danger' : 'badge-warning';
+	var ips = '';
+	if (container.state.network) {
+		ips = Object.keys(container.state.network).reduce((total, key) => {
+			if (key == 'lo') return total;
+			container.state.network[key].addresses.forEach((val) => {
+				total.push(val.address);
+			});
+			return total;
+		}, []).join('<br>');
+	}
+	%>
+		<tr>
+			<td><%= container.name %>
+				<span class="badge <%= badge_type %>"><%= pstr %></span>
+			</td>
+			<td>
+				<%- ips %>
+			</td>
+			<td>
+				<% if (running) { %>
+					<a href="/containers/stop/<%= container.name %>/" class="btn btn-danger btn-sm text-light">Stop</a>
+				<% } else { %>
+					<a href="/containers/start/<%= container.name %>/" class="btn btn-success btn-sm text-light">Start</a>
+					<a href="/containers/delete/<%= container.name %>/" class="btn btn-danger btn-sm text-light">Delete</a>
+				<% } %>
+			</td>
+		</tr>
+	<% } %>
+</table>
+
+
+<%- await include('../footer.ejs') %>

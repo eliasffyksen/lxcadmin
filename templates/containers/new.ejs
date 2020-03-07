@@ -1,0 +1,23 @@
+
+<%- await include('../head.ejs') %>
+
+<h2>New container:</h2>
+
+<% if(req.error) { %>
+	<div class="alert alert-danger"><%= req.error %></div>
+<% } %>
+
+<form method=post>
+	<input class="form-control mb-3" name="name" type="text" placeholder="Name">
+	<select name="image" class="form-control mb-3">
+	<% for(const image of await lxc.image.list()) { %>
+		<option value="<%= image.fingerprint %>"><%= image.properties.description %></option>
+	<% } %>
+	</select>
+	<button type="submit" name="new_container" class="btn btn-success">
+	Create container
+	</button>
+</form>
+
+
+<%- await include('../footer.ejs') %>

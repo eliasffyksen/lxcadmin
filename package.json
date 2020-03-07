@@ -1,0 +1,26 @@
+{
+  "name": "lxcadmin",
+  "version": "1.0.0",
+  "description": "A web panel for lxc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliasffyksen/lxcadmin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eliasffyksen/lxcadmin/issues"
+  },
+  "homepage": "https://github.com/eliasffyksen/lxcadmin#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "lxc": "^0.1.1"
+  }
+}
